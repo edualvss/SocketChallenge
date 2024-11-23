@@ -8,10 +8,10 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
-const char* SERVER_ERRORS_MESSAGES[] = {
-    "",
+const char* SERVER_ERROR_MESSAGES[] = {
+    "OK",
     "You must specify a PORT number to the start the server. In the command line specify: `-port <number>`.",
-    "Check your PORT number command line argument. The port must be a integer positive value.",
+    "Check the PORT number in the command line argument. The port must be a integer positive value.",
     "Socket creation failed.",
     "Set socket option failed.",
     "Socket bind failed.",

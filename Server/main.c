@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     int serverPort = getCommandLinePort(argc,argv);
     if(serverPort < 0) {
         fprintf(stderr,"\nError on the server startup: %s",
-                SERVER_ERRORS_MESSAGES[-serverPort]);
+                SERVER_ERROR_MESSAGES[-serverPort]);
         printf("\nExiting...");
         return serverPort;
     }
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
     int commChannel = acceptConnections(serverPort);
     if( commChannel < 0) {
         fprintf(stderr,"\nError on the communication creation: %s.",
-                SERVER_ERRORS_MESSAGES[-commChannel]);
+                SERVER_ERROR_MESSAGES[-commChannel]);
         closeConnections();
         printf("\nExiting...");
         return commChannel;

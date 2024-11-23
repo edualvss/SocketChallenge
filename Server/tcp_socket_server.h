@@ -9,6 +9,7 @@ struct ServerSocketDescriptors {
 } _serverDescriptors;
 
 
+// Errors: negative values related with the string ERROR messages vector.
 enum SERVER_ERRORS {
     SERVER_NO_PORT = -1,
     SERVER_INVALID_PORT = -2,
@@ -18,7 +19,7 @@ enum SERVER_ERRORS {
     SERVER_SOCKET_LISTEN_ERROR = -6,
     SERVER_SOCKET_ACCEPT_CONNECTION_ERROR = -7
 };
-const char* SERVER_ERRORS_MESSAGES[];
+const char* SERVER_ERROR_MESSAGES[];
 
 
 // Command line setup

@@ -35,5 +35,11 @@ int main(int argc, char *argv[]) {
            "* Server Port: %d",
            inet_ntoa(serverAddress.sin_addr) ,serverPort);
 
+    int socketId = establishConnection(&serverAddress,serverPort);
+    if( socketId < 0) {
+        printf("\n - Error on establish connection with the server: %s",CLIENT_ERROR_MESSAGES[-status]);
+        printf("\nExiting...");
+        return status;
+    }
     return 0;
 }

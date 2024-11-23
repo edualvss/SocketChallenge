@@ -12,7 +12,9 @@ enum CLIENT_ERRORS {
     CLIENT_NO_SERVER_PORT = -2,
     CLIENT_INVALID_SERVER_PORT = -3,
     CLIENT_NO_SERVER_ADDRESS = -4,
-    CLIENT_INVALID_SERVER_ADDRESS = -5
+    CLIENT_INVALID_SERVER_ADDRESS = -5,
+    CLIENT_SERVER_SOCKET_CREATION_ERROR = -6,
+    CLIENT_SERVER_SOCKET_CONNECTION_ERROR = -7
 };
 const char* CLIENT_ERROR_MESSAGES[];
 
@@ -20,6 +22,10 @@ const char* CLIENT_ERROR_MESSAGES[];
 int getCommandLinePort(int commandLineCount, char* commandLineArgs[]);
 int getCommandLineAddress(int commandLineCount, char* commandLineArgs[],
                           struct sockaddr_in *serverAddress);
+
+
+
+int establishConnection(struct sockaddr_in *serverAddress,int serverPort);
 
 
 #endif // TCP_SOCKET_CLIENT_H

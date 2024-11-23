@@ -14,6 +14,8 @@ const char* CLIENT_ERROR_MESSAGES[] = {
     "Check the SERVER PORT number in the command line argument. The port must be a integer positive value.",
     "You must specify the SERVER ADDRESS number to attempt to connect. In the command line specify: `-server <ip4_address>`.",
     "Check the SERVER ADDRESS in the command line argument. The address must be in IPv4 compliant address (e.g. -server 127.0.0.1).",
+    "Client socket creation failed.",
+    "Client socket connection failed."
 };
 
 
@@ -75,4 +77,26 @@ int getCommandLinePort(int commandLineCount, char* commandLineArgs[]) {
     }
 
     return CLIENT_NO_SERVER_PORT;
+}
+
+
+// Establish a TCP/IPv4 socket connection with the specified server address and port.
+// Return the socket file descriptor of the connection.
+int establishConnection(struct sockaddr_in *serverAddress, int serverPort) {
+    int socketId = 0;
+
+    // 1. Create the socket
+    if ((socketId = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        return CLIENT_SERVER_SOCKET_CREATION_ERROR;
+    }
+    printf("\n* Socket created.");
+
+    serverAddress->sin_family = AF_INET;
+    serverAddress->sin_port = htons(serverPort);
+
+
+    // 2. Connect to a server
+    if (connect(socketId, (struct sockaddr *)serverAddress, sizeof((*serverAddress))) < 0) {
+        return CLIENT_SERVER_SOCKET_CONNECTION_ERROR;
+    }
 }

@@ -4,6 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.c
+        main.c \
+        tcp_socket_client.c
 
-HEADERS += 
+HEADERS +=  \
+    tcp_socket_client.h

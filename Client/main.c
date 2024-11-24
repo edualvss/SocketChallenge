@@ -32,14 +32,19 @@ int main(int argc, char *argv[]) {
 
     printf("\n>>> Trying to connect to:\n"
            "* Server Address: %s\n"
-           "* Server Port: %d",
-           inet_ntoa(serverAddress.sin_addr) ,serverPort);
+           "* Server Port: %d\n",
+           inet_ntoa(serverAddress.sin_addr),
+           serverPort);
 
     int socketId = establishConnection(&serverAddress,serverPort);
     if( socketId < 0) {
-        printf("\n - Error on establish connection with the server: %s",CLIENT_ERROR_MESSAGES[-status]);
+        printf("\n - Error on establish connection with the server: %s",CLIENT_ERROR_MESSAGES[-socketId]);
         printf("\nExiting...");
         return status;
     }
+
+    printf("\n\n>>> Connection Established!\n");
+
+
     return 0;
 }

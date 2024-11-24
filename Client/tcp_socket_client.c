@@ -6,6 +6,9 @@
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <unistd.h>
+
+#include <errno.h>
 
 const char* CLIENT_ERROR_MESSAGES[] = {
     "OK",
@@ -83,20 +86,27 @@ int getCommandLinePort(int commandLineCount, char* commandLineArgs[]) {
 // Establish a TCP/IPv4 socket connection with the specified server address and port.
 // Return the socket file descriptor of the connection.
 int establishConnection(struct sockaddr_in *serverAddress, int serverPort) {
-    int socketId = 0;
-
-    // 1. Create the socket
-    if ((socketId = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        return CLIENT_SERVER_SOCKET_CREATION_ERROR;
-    }
-    printf("\n* Socket created.");
 
     serverAddress->sin_family = AF_INET;
     serverAddress->sin_port = htons(serverPort);
 
+    // 1. Create the socket
+    int socketId = 0;
+    int numberConnectionAttempt = 0;
 
-    // 2. Connect to a server
-    if (connect(socketId, (struct sockaddr *)serverAddress, sizeof((*serverAddress))) < 0) {
-        return CLIENT_SERVER_SOCKET_CONNECTION_ERROR;
-    }
+    do {
+        sleep(1);
+        if ((socketId = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+            return CLIENT_SERVER_SOCKET_CREATION_ERROR;
+        }
+
+        // 2. Try to connect to the server
+        if(connect(socketId, (struct sockaddr *)serverAddress, sizeof(struct sockaddr_in)) < 0) {
+            fprintf(stderr,"\n[%d] Trying connect... Check the server - Problem: %s",++numberConnectionAttempt, strerror(errno));
+            close(socketId);
+            socketId = 0;
+        }
+    } while( socketId == 0 );
+
+    return socketId;
 }

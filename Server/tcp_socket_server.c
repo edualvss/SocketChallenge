@@ -114,6 +114,8 @@ int acceptConnections(int port) {
     if(_serverDescriptors.commSocketId < 0) {
         return SERVER_SOCKET_ACCEPT_CONNECTION_ERROR;
     }
+    close(_serverDescriptors.mainSocketId); // After accept a connection, stop listening (just one connection allowed)
+    _serverDescriptors.mainSocketId = 0;
     return _serverDescriptors.commSocketId; // Accepting connection
 }
 
@@ -124,10 +126,12 @@ void closeConnections() {
     } else {
         printf("\n* Client connection closed.");
     }
-    if(close(_serverDescriptors.mainSocketId) < 0) { // Close server connection (listening socket)
-        fprintf(stderr,"\nIt was not possible close the server (socket) connection.");
-    } else {
-        printf("\n* Server connection closed.");
+    if(_serverDescriptors.mainSocketId) {
+        if(close(_serverDescriptors.mainSocketId) < 0) { // Close server connection (listening socket - if more than 1 connection is allowed)
+            fprintf(stderr,"\nIt was not possible close the server (socket) connection.");
+        } else {
+            printf("\n* Server connection closed.");
+        }
     }
 }
 

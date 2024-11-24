@@ -86,7 +86,7 @@ Digite # em qualquer um dos 2 programas que a execução será interrompida em a
 
 * Código desenvolvido por: Eduardo Alves da Silva.
 * Em: 23 de novembro de 2024.
-* O maior esforço foi na reorganização do código base (próximo comentário) que estava todo contido nas funções `main` e possuía apenas 1 troca de mensagens (sem interação do usuário) entre cliente e servidor.
+* O maior esforço foi na reorganização do código base (próximo comentário) que estava todo contido nas funções `main` e possuía 3 trocas de mensagens entre cliente e servidor (interação apenas no servidor).
 * Código base - teste de conexão de socket em C entre cliente e servidor aproveitado da disciplina de Sistemas Distribuídos lecionada em 2021/2 na Univali [Repositório e branch do Código base](https://github.com/edualvss/sisdis/tree/2021-2/socket_c).
 * O código base foi inspirado em: https://www.geeksforgeeks.org/socket-programming-cc/.
 * A parte de leitura dos parâmetros da linha de comando foi implementada do zero sem uso de nenhuma fonte.

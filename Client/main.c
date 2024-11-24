@@ -30,6 +30,8 @@ int main(int argc, char *argv[]) {
         return errorCode;
     }
 
+
+    // 2. Connect to the server
     printf("\n>>> Trying to connect to:\n"
            "* Server Address: %s\n"
            "* Server Port: %d\n",
@@ -43,8 +45,25 @@ int main(int argc, char *argv[]) {
         return status;
     }
 
-    printf("\n\n>>> Connection Established!\n");
+    printf("\n\n>>> Connection Established! <<<\n");
 
+
+    // 3. Start the chat
+    printf("\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\n");
+    printf("************* Chit Chat (client) *************\n");
+    printf("\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\n");
+    chitChat(socketId);
+
+
+    // 4. End the program.
+    printf("\n\nBye bye!");
+    close(socketId);
+
+    printf("\n\n###############################################\n");
+    printf("###############################################\n");
+    printf("************** End of Chit Chat ***************\n");
+    printf("###############################################\n");
+    printf("###############################################\n");
 
     return 0;
 }

@@ -1,7 +1,9 @@
 #ifndef TCP_SOCKET_SERVER_H
 #define TCP_SOCKET_SERVER_H
 
-#define SOCKET_BUFFER_SIZER 1024
+#define SOCKET_BUFFER_SIZE 1024
+
+const char* END_OF_CHAT;
 
 struct ServerSocketDescriptors {
     int mainSocketId;
@@ -31,5 +33,6 @@ int getCommandLinePort(int commandLineCount, char* commandLineArgs[]);
 int acceptConnections(int port);
 void closeConnections();
 
+void chitChat(int socketId);
 
 #endif // TCP_SOCKET_SERVER_H

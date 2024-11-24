@@ -19,6 +19,9 @@ const char* SERVER_ERROR_MESSAGES[] = {
     "Socket can not accept connections."
 };
 
+const char* END_OF_CHAT = "#";
+
+
 int isPortValid(int portNumber) {
     return portNumber > 0;
 }
@@ -126,4 +129,39 @@ void closeConnections() {
     } else {
         printf("\n* Server connection closed.");
     }
+}
+
+
+void chitChat(int socketId) {
+
+    printf("\nAlice (client) started the chat with you (Bob)!\n");
+    printf("Text `#` to exit from the chat.\n");
+
+    char buffer[SOCKET_BUFFER_SIZE] = {0};
+
+
+    int bytesReceived = 0;
+    do {
+        /// RECEIVE
+        printf("\nWait for Alice...\n");
+        bytesReceived = read(socketId, buffer, SOCKET_BUFFER_SIZE);
+        buffer[bytesReceived] = '\0'; // Reuse the buffer (to send and receive) and avoid wrong end of string place.
+        if( strcmp(buffer, END_OF_CHAT) == 0 ) {
+            printf("\nAlice (client) ended the chat.");
+            break;
+        }
+        printf("\n<< Alice (client): %s",buffer);
+
+        //// SEND
+        printf("\nBob (server) >> ");
+        fgets(buffer,SOCKET_BUFFER_SIZE,stdin);
+        buffer[ strlen(buffer) - 1 ] = '\0'; // Remove the \newline character.
+
+        if( strcmp(buffer,END_OF_CHAT) == 0 ) {
+            send(socketId,END_OF_CHAT,2,0); // Warn the client to end the conversation
+            break;
+        }
+        send(socketId, buffer, strlen(buffer), 0);
+
+    } while(1);
 }

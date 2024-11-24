@@ -3,6 +3,9 @@
 
 #define BUFFER_SIZE 1024
 
+
+const char* END_OF_CHAT;
+
 struct sockaddr_in;
 
 // Errors: negative values related with the string ERROR messages vector.
@@ -26,6 +29,9 @@ int getCommandLineAddress(int commandLineCount, char* commandLineArgs[],
 
 
 int establishConnection(struct sockaddr_in *serverAddress,int serverPort);
+
+void chitChat(int socketId);
+
 
 
 #endif // TCP_SOCKET_CLIENT_H

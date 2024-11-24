@@ -21,6 +21,8 @@ const char* CLIENT_ERROR_MESSAGES[] = {
     "Client socket connection failed."
 };
 
+const char* END_OF_CHAT = "#";
+
 
 int isPortValid(int portNumber) {
     return portNumber > 0;
@@ -109,4 +111,39 @@ int establishConnection(struct sockaddr_in *serverAddress, int serverPort) {
     } while( socketId == 0 );
 
     return socketId;
+}
+
+
+void chitChat(int socketId) {
+
+    char buffer[BUFFER_SIZE] = {0};
+
+    printf("\nStart the CHAT.\n You will be called `Alice` (client) - Text your the first message to Bob (server)!\n");
+    printf("Text `#` to exit from the chat.\n");
+
+    int bytesReceived = 0;
+
+    do {
+        //// SEND
+        printf("\nAlice (client) >> ");
+        fgets(buffer,BUFFER_SIZE,stdin);
+        buffer[ strlen(buffer) - 1 ] = '\0'; // Remove the \newline from the string
+
+        if( strcmp(buffer,END_OF_CHAT) == 0 ) {
+            send(socketId,END_OF_CHAT,2,0); // Warn the server to end the conversation
+            break;
+        }
+        send(socketId, buffer, strlen(buffer), 0);
+
+        /// RECEIVE
+        printf("\nWait for Bob...\n");
+        bytesReceived = read(socketId, buffer, BUFFER_SIZE);
+        buffer[bytesReceived] = '\0';   // Read just the amount of bytes received (for buffer reuse removing the \newline marker).
+        if( strcmp(buffer, END_OF_CHAT) == 0 ) {
+            printf("\nBob ended the chat.");
+            break;
+        }
+        printf("\n<< Bob (server): %s",buffer);
+
+    } while(1);
 }

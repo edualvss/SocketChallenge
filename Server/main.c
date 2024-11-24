@@ -43,18 +43,14 @@ int main(int argc, char* argv[]) {
     printf("\n\n>>>>>> CONNECTION ESTABLISHED <<<<<\n\n");
 
 
-    // 3. Send/receive data from the client
-
-    char buffer[SOCKET_BUFFER_SIZER] = {0};
-    char* testMessage = "Message sent from server";
-    int valRead;
-    // Send
-    send(commChannel, testMessage, strlen(testMessage),0);
-    // Receive
-    valRead = read(commChannel, buffer, SOCKET_BUFFER_SIZER);
-    printf("\nMessage received from the client: %s",buffer);
+    // 3. Send/receive data from the client - start the chat
+    printf("\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\n");
+    printf("************* Chit Chat (server) *************\n");
+    printf("\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\n");
+    chitChat(commChannel);
 
 
+    // 4. End the program
     closeConnections();
     printf("\n###############################################\n");
     printf("##################### END #####################\n");
